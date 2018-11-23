@@ -15,8 +15,9 @@ module.exports = (db, resource) => {
 
   route.get("/", async (req, res) => {
     try {
-      const items = await db(resource);
-      res.status(200).json(items.map(item => truthyConverter(item)));
+      let items = await db(resource);
+      items = items.map(item => truthyConverter(item));
+      res.status(200).json(items);
     } catch (err) {
       sendError(res);
     }
@@ -29,7 +30,7 @@ module.exports = (db, resource) => {
         .where({ id })
         .first();
       item = truthyConverter(item);
-      if ((resource = "todos")) {
+      if (resource === "todos") {
         let subitems = await db("subitems")
           .where({ todo_id: id })
           .select("id", "name", "complete");
