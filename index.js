@@ -16,5 +16,6 @@ server.get('/' , (req,res)=>{
 
 server.use('/api/todos', routeMaker(db, 'todos'))
 server.use('/api/subitems', routeMaker(db, 'subitems'))
+server.use('/api/all', routeMaker(db, 'all'))
 
 server.listen(port, ()=> console.log(`we hear you ${port}`))
